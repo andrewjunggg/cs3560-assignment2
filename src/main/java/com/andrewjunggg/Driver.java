@@ -1,13 +1,12 @@
 package com.andrewjunggg;
 
-/**
- * Hello world!
- *
- */
+import com.andrewjunggg.ui.ControlPanel;
+
 public class Driver 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        ControlPanel control_panel = new ControlPanel();
+        control_panel.show();
     }
 }
