@@ -54,7 +54,7 @@ public class UserView extends JFrame {
         });
     }
 
-    public void present() {
+    public void show() {
         setVisible(true);
     }
 

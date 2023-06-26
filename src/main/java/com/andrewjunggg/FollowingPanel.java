@@ -70,6 +70,9 @@ public class FollowingPanel extends JPanel {
         buildPanel();
         validate();
         repaint();
+
+        if (onRefreshListener != null)
+            onRefreshListener.run();
     }
 
     public User getUser() {

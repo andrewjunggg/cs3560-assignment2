@@ -7,15 +7,13 @@ import javax.swing.JFrame;
 import com.andrewjunggg.User;
 import com.andrewjunggg.UserView;
 
-public class ControlPanel {
-    private final JFrame frame;
-
+public class ControlPanel extends JFrame {
     public ControlPanel() {
-        frame = new JFrame();
-        frame.setResizable(false);
-        frame.setSize(800, 800);
+        setResizable(false);
+        setSize(800, 500);
 
         SideViewPanel sideViewPanel = new SideViewPanel();
+        add(sideViewPanel, BorderLayout.WEST);
 
         ManagePanel managePanel = new ManagePanel();
         managePanel.setRefreshListener(sideViewPanel::update);
@@ -28,13 +26,10 @@ public class ControlPanel {
             UserView userView = new UserView(selectedUser);
             userView.show();
         });
-
-        frame.add(sideViewPanel, BorderLayout.WEST);
-        frame.add(managePanel, BorderLayout.EAST);
+        add(managePanel, BorderLayout.EAST);
     }
 
     public void show() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        setVisible(true);
     }
 }
