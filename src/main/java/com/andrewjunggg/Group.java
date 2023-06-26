@@ -15,6 +15,17 @@ public class Group extends Identity {
         super(idString);
     }
 
+    public Group(String idString, User[] users) {
+        super(idString);
+        setUsers(users);
+    }
+
+    public Group(String idString, User[] users, Group[] subgroups) {
+        super(idString);
+        setUsers(users);
+        setSubgroups(subgroups);
+    }
+
     // getter
 
     public User[] getUsersArray() {
