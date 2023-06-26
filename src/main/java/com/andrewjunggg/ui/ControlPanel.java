@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import com.andrewjunggg.User;
 import com.andrewjunggg.UserView;
 
 public class ControlPanel {
@@ -18,9 +19,13 @@ public class ControlPanel {
 
         ManagePanel managePanel = new ManagePanel();
         managePanel.setUserViewListener(() -> {
-            // TODO: pass selected user
-            UserView user = new UserView(null);
-            user.show();
+            User selectedUser = sideViewPanel.getSelectedUser();
+
+            if (selectedUser == null)
+                return;
+
+            UserView userView = new UserView(selectedUser);
+            userView.show();
         });
 
         frame.add(sideViewPanel, BorderLayout.WEST);

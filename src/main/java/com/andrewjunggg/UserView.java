@@ -12,6 +12,8 @@ public class UserView {
         frame = new JFrame();
         frame.setResizable(false);
         frame.setSize(800, 800);
+
+        System.out.println("Showing user view: " + user.getId());
     }
 
     public void show() {
