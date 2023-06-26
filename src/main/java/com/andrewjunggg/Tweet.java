@@ -1,21 +1,23 @@
 package com.andrewjunggg;
 
-public class Tweet {
-    private String message;
+import java.util.Date;
 
-    Tweet(String messageString) {
-        this.message = messageString;
+public class Tweet extends ITweet implements TweetVisitable {
+    public Tweet(String content, User user) {
+        super(content, user);
     }
 
-    // getter
-
-    public String getMessage() {
-        return message;
+    public Tweet(String content, User user, Date date) {
+        super(content, user, date);
     }
 
-    // setter
+    @Override
+    public String getFormattedContent() {
+        return "[" + getDate() + "] " + getUser().getId() + ": " + getContent();
+    }
 
-    public void setMessage(String messageString) {
-        this.message = messageString;
+    @Override
+    public boolean accept(TweetVisitor visitor) {
+        return visitor.visit(this);
     }
 }

@@ -9,10 +9,9 @@ import java.util.Set;
 // - remove following
 
 public class User extends Identity {
-    
+    private final Feed feed = new Feed();
     private Set<User> followers = new HashSet<>();
     private Set<User> followings = new HashSet<>();
-    private Tweet[] feed;
 
     
     public User(String idString) {
@@ -33,14 +32,18 @@ public class User extends Identity {
         return followings.toArray(User[]::new);
     }
 
-    public Tweet[] getFeed() {
+    public Feed getFeed() {
         return feed;
     }
 
     // setter
 
-    public void setFeed(Tweet[] feed) {
-        this.feed = feed;
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
+    }
+
+    public void setFollowing(Set<User> following) {
+        this.followings = following;
     }
 
     // methods

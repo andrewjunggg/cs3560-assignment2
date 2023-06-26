@@ -1,24 +1,61 @@
 package com.andrewjunggg;
 
 import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-public class UserView {
-    private final JFrame frame;
+public class UserView extends JFrame {
     private final User user;
 
     public UserView(User user) {
         this.user = user;
 
-        frame = new JFrame();
-        frame.setResizable(false);
-        frame.setSize(800, 800);
-        frame.setTitle(user.getId());
+        setResizable(false);
+        setSize(400, 500);
+        setTitle(user.getId());
 
-        frame.add(new FollowingPanel(user));
+        FeedPanel feedPanel = new FeedPanel(user);
+        FollowingPanel followingPanel = new FollowingPanel(user);
+        followingPanel.setRefreshListener(feedPanel::update);
+
+        add(followingPanel, BorderLayout.NORTH);
+        add(feedPanel);
+
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent windowEvent) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                feedPanel.removeAllWatchers();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent windowEvent) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent windowEvent) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent windowEvent) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent windowEvent) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent windowEvent) {
+            }
+        });
     }
 
-    public void show() {
-        frame.setVisible(true);
+    public void present() {
+        setVisible(true);
     }
 
     public User getUser() {

@@ -22,7 +22,7 @@ public class FollowingPanel extends JPanel {
         this.user = user;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(500, 500));
+        setPreferredSize(new Dimension(400, 200));
         setBorder(BorderFactory.createTitledBorder("Following"));
 
         buildPanel();
@@ -74,5 +74,9 @@ public class FollowingPanel extends JPanel {
 
     public User getUser() {
         return user;
+    }
+
+    public void setRefreshListener(Runnable onRefreshListener) {
+        this.onRefreshListener = onRefreshListener;
     }
 }
