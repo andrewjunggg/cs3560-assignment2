@@ -38,7 +38,7 @@ public class SideViewPanel extends JPanel {
                 if (value instanceof DefaultMutableTreeNode) {
                     // Set the name of the tree cell to the ID if it is a user or group.
                     // TODO: replace with OOP method, common parent class
-                    
+
                     Object userValue = ((DefaultMutableTreeNode) value).getUserObject();
 
                     if (userValue instanceof User) {
@@ -58,6 +58,10 @@ public class SideViewPanel extends JPanel {
 
     public User getSelectedUser() {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+        
+        if (node == null)
+            return null;
+
         Object userObject = node.getUserObject();
 
         if (userObject instanceof User)
