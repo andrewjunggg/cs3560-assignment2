@@ -29,13 +29,12 @@ public class User extends Identity {
         return followings;
     }
 
-    public Tweet[] getFeed() {
-        return feed;
+    public User[] getFollowingArray() {
+        return followings.toArray(User[]::new);
     }
 
-    public String[] getFollowingIds() {
-        String[] fixedFollowings = new String[followings.size()];
-        return followings.toArray(fixedFollowings);
+    public Tweet[] getFeed() {
+        return feed;
     }
 
     // setter
