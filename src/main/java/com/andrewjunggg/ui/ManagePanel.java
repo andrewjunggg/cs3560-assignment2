@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 
 import com.andrewjunggg.DataManager;
 import com.andrewjunggg.Group;
+import com.andrewjunggg.Tweet;
+import com.andrewjunggg.TweetPositiveVisitor;
 import com.andrewjunggg.User;
 
 public class ManagePanel extends JPanel {
@@ -20,7 +22,7 @@ public class ManagePanel extends JPanel {
 
     public ManagePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(300, 300));
+        setPreferredSize(new Dimension(500, 500));
         setBorder(BorderFactory.createTitledBorder("Manage"));
 
         JButton addUserButton = new JButton("Add user");
@@ -32,59 +34,99 @@ public class ManagePanel extends JPanel {
                     "Group ID", groupIdField,
             };
 
-        JOptionPane.showConfirmDialog(null, request, "Add user", JOptionPane.OK_CANCEL_OPTION);
+            JOptionPane.showMessageDialog(null, request, "Add User", JOptionPane.QUESTION_MESSAGE);
 
-        addUser(userIdField.getText(), groupIdField.getText());
-            
-        if (onRefreshListener != null)
-            onRefreshListener.run();
+            String userId = userIdField.getText();
+            String groupId = groupIdField.getText();
+
+            if (dataManager.findUserById(userId) == null) {
+                addUser(userId, groupId);
+
+                if (onRefreshListener != null)
+                    onRefreshListener.run();
+            } else {
+                JOptionPane.showMessageDialog(null, "User with that ID already exists.");
+            }
         });
+        add(addUserButton);
 
         JButton addGroupButton = new JButton("Add group");
         addGroupButton.addActionListener(actionEvent -> {
             JTextField groupIdField = new JTextField();
             JTextField parentGroupIdField = new JTextField();
-            // What if no text provided?
             Object[] request = {
-                "Group ID", groupIdField,
-                "Parent Group ID", parentGroupIdField,
+                    "Group ID", groupIdField,
+                    "Parent Group ID", parentGroupIdField,
             };
 
-            JOptionPane.showConfirmDialog(null, request, "Add Group", JOptionPane.OK_CANCEL_OPTION);
+            JOptionPane.showMessageDialog(null, request, "Add Group", JOptionPane.QUESTION_MESSAGE);
 
-            addGroup(groupIdField.getText(), parentGroupIdField.getText());
+            String groupId = groupIdField.getText();
+            String parentGroupId = parentGroupIdField.getText();
 
-            if (onRefreshListener != null)
-                onRefreshListener.run();
+            if (dataManager.findGroupById(groupId) == null) {
+                addGroup(groupId, parentGroupId);
+
+                if (onRefreshListener != null)
+                    onRefreshListener.run();
+            } else {
+                JOptionPane.showMessageDialog(null, "Group with that ID already exists.");
+            }
         });
+        add(addGroupButton);
 
-        JButton userViewButton = new JButton("Open user view");
-        userViewButton.addActionListener(actionEvent -> {
+        JButton openUserViewButton = new JButton("Open user view");
+        openUserViewButton.addActionListener(actionEvent -> {
             if (onUserViewListener != null)
                 onUserViewListener.run();
         });
+        add(openUserViewButton);
 
-        add(addUserButton);
-        add(addGroupButton);
-        add(userViewButton);
+        JButton checkGoodnessButton = new JButton("Check goodness");
+        checkGoodnessButton.addActionListener(actionEvent -> {
+            double totalGoodness = 0;
+            int tweetCount = 0;
+
+            TweetPositiveVisitor tweetGoodnessVisitor = new TweetPositiveVisitor();
+
+            Tweet[] allTweets = dataManager.getAllTweets();
+            for (Tweet tweet : allTweets) {
+                boolean good = tweet.accept(tweetGoodnessVisitor);
+                if (good)
+                    totalGoodness++;
+
+                tweetCount += 1;
+            }
+
+            if (tweetCount != 0)
+                totalGoodness /= tweetCount;
+
+            JOptionPane.showMessageDialog(null, "Total goodness: " + totalGoodness * 100 + "%");
+        });
+        add(checkGoodnessButton);
+
+        JButton statsButton = new JButton("Show stats");
+        statsButton.addActionListener(actionEvent -> {
+            Group[] allGroups = dataManager.getAllGroups();
+            User[] allUsers = dataManager.getAllUsers();
+            Tweet[] allTweets = dataManager.getAllTweets();
+
+            JOptionPane.showMessageDialog(null, "Total groups: " + allGroups.length + "\nTotal users: " + allUsers.length + "\nTotal tweets: " + allTweets.length);
+        });
+        add(statsButton);
     }
 
-    public void setRefreshListener(Runnable refreshListener) {
-        this.onRefreshListener = refreshListener;
-    }
+    private void addUser(String userId, String groupId) {
+        if (userId.isEmpty())
+            return;
 
-    public void setUserViewListener(Runnable userViewListener) {
-        this.onUserViewListener = userViewListener;
-    }
-
-    private void addUser(String idString, String groupIdString) {
-        User user = new User(idString);
+        User user = new User(userId);
         Group group;
 
-        if (groupIdString.isEmpty()) {
+        if (groupId.isEmpty()) {
             group = dataManager.getRootGroup();
         } else {
-            group = dataManager.findGroupById(groupIdString);
+            group = dataManager.findGroupById(groupId);
         }
 
         if (group != null) {
@@ -92,18 +134,29 @@ public class ManagePanel extends JPanel {
         }
     }
 
-    private void addGroup(String groupIdString, String parentGroupIdString) {
-        Group group = new Group(groupIdString);
+    private void addGroup(String groupId, String parentGroupId) {
+        if (groupId.isEmpty())
+            return;
+
+        Group group = new Group(groupId);
         Group parentGroup;
 
-        if (parentGroupIdString.isEmpty()) {
+        if (parentGroupId.isEmpty()) {
             parentGroup = dataManager.getRootGroup();
         } else {
-            parentGroup = dataManager.findGroupById(parentGroupIdString);
+            parentGroup = dataManager.findGroupById(parentGroupId);
         }
 
         if (parentGroup != null) {
             parentGroup.addSubgroup(group);
         }
+    }
+
+    public void setRefreshListener(Runnable onRefreshListener) {
+        this.onRefreshListener = onRefreshListener;
+    }
+
+    public void setUserViewListener(Runnable onUserViewListener) {
+        this.onUserViewListener = onUserViewListener;
     }
 }

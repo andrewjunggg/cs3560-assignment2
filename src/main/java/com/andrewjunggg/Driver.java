@@ -1,12 +1,12 @@
 package com.andrewjunggg;
 
-import com.andrewjunggg.ui.ControlPanel;
+import com.andrewjunggg.ui.ControlView;
 
 public class Driver 
 {
     public static void main( String[] args )
     {
-        ControlPanel control_panel = new ControlPanel();
+        ControlView control_panel = new ControlView();
         control_panel.show();
     }
 }

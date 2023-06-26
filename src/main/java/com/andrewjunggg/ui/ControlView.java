@@ -1,14 +1,14 @@
 package com.andrewjunggg.ui;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 
 import javax.swing.JFrame;
 
 import com.andrewjunggg.User;
 import com.andrewjunggg.UserView;
 
-public class ControlPanel extends JFrame {
-    public ControlPanel() {
+public class ControlView extends JFrame {
+    public ControlView() {
         setResizable(false);
         setSize(800, 500);
 
