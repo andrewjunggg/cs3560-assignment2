@@ -18,6 +18,7 @@ public class ControlPanel {
         SideViewPanel sideViewPanel = new SideViewPanel();
 
         ManagePanel managePanel = new ManagePanel();
+        managePanel.setRefreshListener(sideViewPanel::update);
         managePanel.setUserViewListener(() -> {
             User selectedUser = sideViewPanel.getSelectedUser();
 

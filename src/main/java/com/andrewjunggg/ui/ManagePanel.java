@@ -9,6 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.andrewjunggg.DataManager;
+import com.andrewjunggg.Group;
+
 public class ManagePanel extends JPanel {
     private Runnable onRefreshListener;
     private Runnable onUserViewListener;
@@ -38,7 +41,8 @@ public class ManagePanel extends JPanel {
         JButton addGroupButton = new JButton("Add group");
         addGroupButton.addActionListener(actionEvent -> {
             String id = JOptionPane.showInputDialog("Group ID");
-            System.out.println(id);
+            DataManager.getInstance().getRootGroup().addSubgroups(new Group(id));
+            
             // TODO: add new group and refresh
             if (onRefreshListener != null)
                 onRefreshListener.run();

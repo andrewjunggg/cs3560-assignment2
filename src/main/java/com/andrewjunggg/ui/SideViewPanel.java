@@ -16,13 +16,16 @@ import com.andrewjunggg.User;
 
 public class SideViewPanel extends JPanel {
 
-    private final JTree tree;
+    private JTree tree;
 
     public SideViewPanel() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(300, 500));
         setBorder(BorderFactory.createTitledBorder("View"));
+        buildTree();
+    }
 
+    public void buildTree() {
         DataManager dataManager = DataManager.getInstance();
         Group rootGroup = dataManager.getRootGroup();
         DefaultMutableTreeNode root = buildTreeNode(rootGroup);
@@ -53,7 +56,14 @@ public class SideViewPanel extends JPanel {
             }
         });
 
+        removeAll();
         add(tree);
+    }
+
+    public void update() {
+        buildTree();
+        validate();
+        repaint();
     }
 
     public User getSelectedUser() {
