@@ -4,21 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DataManager {
+public class DataManager implements IDataManager {
     private static DataManager instance;
     private final Group rootGroup = new Group("Root");
 
     private DataManager() {
-        // User user1 = new User("user1");
-        // User user2 = new User("user2");
-        // User user3 = new User("user3");
-
-        // user1.addFollowing(user2);
-        // user1.addFollowing(user3);
-
-        // rootGroup.addUser(user1);
-        // rootGroup.addUser(user2);
-        // rootGroup.addUser(user3);
     }
 
     public static DataManager getInstance() {
@@ -29,9 +19,27 @@ public class DataManager {
     }
 
     // Group
-
+    @Override
     public Group getRootGroup() {
         return rootGroup;
+    }
+
+    @Override
+    public Group[] getAllGroups() {
+        return getAllGroupsRecursively(rootGroup);
+    }
+
+    private Group[] getAllGroupsRecursively(Group group) {
+        List<Group> groups = new ArrayList<>();
+        groups.add(group);
+
+        Group[] subgroups = group.getSubgroupsArray();
+
+        for (Group subgroup : subgroups) {
+            Collections.addAll(groups, getAllGroupsRecursively(subgroup));
+        }
+
+        return groups.toArray(Group[]::new);
     }
 
     private Group findGroupByIdRecursively(String idString, Group root) {
@@ -48,13 +56,14 @@ public class DataManager {
         return null;
     }
 
+    @Override
     public Group findGroupById(String id) {
         Group rootGroup = getRootGroup();
         return findGroupByIdRecursively(id, rootGroup);
     }
 
     // User
-
+    @Override
     public User findUserById(String id) {
         Group rootGroup = getRootGroup();
         return recursivelyFindUserById(id, rootGroup);
@@ -90,7 +99,21 @@ public class DataManager {
         return users.toArray(User[]::new);
     }
 
+    @Override
     public User[] getAllUsers() {
         return recursivelyGetAllUsers(rootGroup);
+    }
+
+    // Tweets
+    @Override
+    public Tweet[] getAllTweets() {
+        List<Tweet> tweets = new ArrayList<>();
+
+        User[] allUsers = getAllUsers();
+        for (User user : allUsers) {
+            Collections.addAll(tweets, user.getFeed().getTweets());
+        }
+
+        return tweets.toArray(Tweet[]::new);
     }
 }
