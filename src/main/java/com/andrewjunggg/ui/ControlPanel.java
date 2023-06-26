@@ -17,6 +17,7 @@ public class ControlPanel {
     }
 
     public void show() {
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 }
