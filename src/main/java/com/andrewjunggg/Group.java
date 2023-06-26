@@ -54,7 +54,7 @@ public class Group extends Identity {
         users.add(user);
     }
 
-    public void addSubgroups(Group subgroup) {
+    public void addSubgroup(Group subgroup) {
         this.subgroups.add(subgroup);
     }
 }
