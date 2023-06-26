@@ -9,7 +9,7 @@ import com.andrewjunggg.User;
 public class ControlView extends JFrame {
     public ControlView() {
         setResizable(false);
-        setSize(1000, 1000);
+        setSize(800, 800);
 
         SideViewPanel sideViewPanel = new SideViewPanel();
         add(sideViewPanel, BorderLayout.WEST);

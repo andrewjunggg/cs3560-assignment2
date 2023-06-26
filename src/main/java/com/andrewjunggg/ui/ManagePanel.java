@@ -22,10 +22,11 @@ public class ManagePanel extends JPanel {
 
     public ManagePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(500, 500));
+        setPreferredSize(new Dimension(350, 150));
         setBorder(BorderFactory.createTitledBorder("Manage"));
+        
 
-        JButton addUserButton = new JButton("Add user");
+        JButton addUserButton = new JButton("Add User");
         addUserButton.addActionListener(actionEvent -> {
             JTextField userIdField = new JTextField();
             JTextField groupIdField = new JTextField();
@@ -50,7 +51,7 @@ public class ManagePanel extends JPanel {
         });
         add(addUserButton);
 
-        JButton addGroupButton = new JButton("Add group");
+        JButton addGroupButton = new JButton("Add Group");
         addGroupButton.addActionListener(actionEvent -> {
             JTextField groupIdField = new JTextField();
             JTextField parentGroupIdField = new JTextField();
@@ -75,14 +76,14 @@ public class ManagePanel extends JPanel {
         });
         add(addGroupButton);
 
-        JButton openUserViewButton = new JButton("Open user view");
+        JButton openUserViewButton = new JButton("Open User View");
         openUserViewButton.addActionListener(actionEvent -> {
             if (onUserViewListener != null)
                 onUserViewListener.run();
         });
         add(openUserViewButton);
 
-        JButton checkGoodnessButton = new JButton("Check goodness");
+        JButton checkGoodnessButton = new JButton("Show Positive Percentage");
         checkGoodnessButton.addActionListener(actionEvent -> {
             double totalGoodness = 0;
             int tweetCount = 0;
@@ -101,17 +102,17 @@ public class ManagePanel extends JPanel {
             if (tweetCount != 0)
                 totalGoodness /= tweetCount;
 
-            JOptionPane.showMessageDialog(null, "Total goodness: " + totalGoodness * 100 + "%");
+            JOptionPane.showMessageDialog(null, "Positivity: " + totalGoodness * 100 + "%");
         });
         add(checkGoodnessButton);
 
-        JButton statsButton = new JButton("Show stats");
+        JButton statsButton = new JButton("Show Statistics");
         statsButton.addActionListener(actionEvent -> {
             Group[] allGroups = dataManager.getAllGroups();
             User[] allUsers = dataManager.getAllUsers();
             Tweet[] allTweets = dataManager.getAllTweets();
 
-            JOptionPane.showMessageDialog(null, "Total groups: " + allGroups.length + "\nTotal users: " + allUsers.length + "\nTotal tweets: " + allTweets.length);
+            JOptionPane.showMessageDialog(null, "Total Group(s): " + allGroups.length + "\nTotal User(s): " + allUsers.length + "\nTotal Tweet(s): " + allTweets.length);
         });
         add(statsButton);
     }

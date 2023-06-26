@@ -22,7 +22,7 @@ public class SideViewPanel extends JPanel {
 
     public SideViewPanel() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(300, 500));
+        setPreferredSize(new Dimension(350, 150));
         setBorder(BorderFactory.createTitledBorder("View"));
         buildTree();
     }
@@ -39,11 +39,9 @@ public class SideViewPanel extends JPanel {
                 if (value instanceof DefaultMutableTreeNode) {
                     Object userValue = ((DefaultMutableTreeNode) value).getUserObject();
 
-                    // Use common parent class to get ID.
                     if (userValue instanceof Identity)
                         setText(((Identity) userValue).getId());
 
-                    // Groups should always be a directory icon.
                     if (userValue instanceof Group)
                         setIcon(UIManager.getIcon("FileView.directoryIcon"));
                 }
@@ -73,9 +71,6 @@ public class SideViewPanel extends JPanel {
         return null;
     }
 
-    /**
-     * Build the tree nodes from the root group.
-     */
     private DefaultMutableTreeNode buildTreeNode(Group group) {
         DefaultMutableTreeNode topNode = new DefaultMutableTreeNode(group);
         for (User user : group.getUsersArray()) {
