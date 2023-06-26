@@ -1,6 +1,9 @@
-package com.andrewjunggg;
+package com.andrewjunggg.ui;
 
 import javax.swing.JFrame;
+
+import com.andrewjunggg.User;
+
 import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -54,7 +57,7 @@ public class UserView extends JFrame {
         });
     }
 
-    public void show() {
+    public void present() {
         setVisible(true);
     }
 

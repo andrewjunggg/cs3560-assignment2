@@ -1,4 +1,4 @@
-package com.andrewjunggg;
+package com.andrewjunggg.ui;
 
 import java.awt.Dimension;
 import java.util.Arrays;
@@ -10,6 +10,9 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import com.andrewjunggg.DataManager;
+import com.andrewjunggg.User;
 
 public class FollowingPanel extends JPanel {
     private final User user;

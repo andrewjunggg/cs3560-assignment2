@@ -5,12 +5,11 @@ import java.awt.*;
 import javax.swing.JFrame;
 
 import com.andrewjunggg.User;
-import com.andrewjunggg.UserView;
 
 public class ControlView extends JFrame {
     public ControlView() {
         setResizable(false);
-        setSize(800, 500);
+        setSize(1000, 1000);
 
         SideViewPanel sideViewPanel = new SideViewPanel();
         add(sideViewPanel, BorderLayout.WEST);
@@ -24,12 +23,13 @@ public class ControlView extends JFrame {
                 return;
 
             UserView userView = new UserView(selectedUser);
-            userView.show();
+            userView.present();
         });
         add(managePanel, BorderLayout.EAST);
     }
 
-    public void show() {
+    public void present() {
         setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

@@ -1,4 +1,4 @@
-package com.andrewjunggg;
+package com.andrewjunggg.ui;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,6 +11,11 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import com.andrewjunggg.Feed;
+import com.andrewjunggg.Tweet;
+import com.andrewjunggg.TweetLengthValidatorVisitor;
+import com.andrewjunggg.User;
 
 public class FeedPanel extends JPanel {
     private final User user;
