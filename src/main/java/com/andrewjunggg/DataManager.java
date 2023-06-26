@@ -2,9 +2,9 @@ package com.andrewjunggg;
 
 public class DataManager {
     private static DataManager instance;
+    private final Group rootGroup = new Group("Root");
 
     private DataManager() {
-        // TODO
     }
 
     public static DataManager getInstance() {
@@ -12,5 +12,9 @@ public class DataManager {
             instance = new DataManager();
         
         return instance;
+    }
+
+    public Group getRootGroup() {
+        return rootGroup;
     }
 }
