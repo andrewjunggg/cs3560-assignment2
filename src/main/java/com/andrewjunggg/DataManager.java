@@ -5,6 +5,16 @@ public class DataManager {
     private final Group rootGroup = new Group("Root");
 
     private DataManager() {
+        User user1 = new User("user1");
+        User user2 = new User("user2");
+        User user3 = new User("user3");
+
+        user1.addFollowing(user2);
+        user1.addFollowing(user3);
+
+        rootGroup.addUser(user1);
+        rootGroup.addUser(user2);
+        rootGroup.addUser(user3);
     }
 
     public static DataManager getInstance() {

@@ -33,8 +33,13 @@ public class User extends Identity {
         return feed;
     }
 
+    public String[] getFollowingIds() {
+        String[] fixedFollowings = new String[followings.size()];
+        return followings.toArray(fixedFollowings);
+    }
+
     // setter
-    
+
     public void setFeed(Tweet[] feed) {
         this.feed = feed;
     }

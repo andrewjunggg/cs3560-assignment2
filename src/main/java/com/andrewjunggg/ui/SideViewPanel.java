@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTree;
+import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
@@ -50,6 +51,8 @@ public class SideViewPanel extends JPanel {
 
                     if (userValue instanceof Group) {
                         setText(((Group) userValue).getId());
+                        setIcon(UIManager.getIcon("FileView.directoryIcon"));
+                        
                     }
                 }
                 return this;
