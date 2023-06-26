@@ -11,8 +11,10 @@ import javax.swing.JTextField;
 
 import com.andrewjunggg.DataManager;
 import com.andrewjunggg.Group;
+import com.andrewjunggg.User;
 
 public class ManagePanel extends JPanel {
+    private final DataManager dataManager = DataManager.getInstance();
     private Runnable onRefreshListener;
     private Runnable onUserViewListener;
 
@@ -30,22 +32,12 @@ public class ManagePanel extends JPanel {
                     "Group ID", groupIdField,
             };
 
-            JOptionPane.showConfirmDialog(null, request);
-            System.out.println(userIdField.getText());
-            System.out.println(groupIdField.getText());
-            // TODO: add new user and refresh
-            if (onRefreshListener != null)
-                onRefreshListener.run();
-        });
+        JOptionPane.showConfirmDialog(null, request);
 
-        JButton addGroupButton = new JButton("Add group");
-        addGroupButton.addActionListener(actionEvent -> {
-            String id = JOptionPane.showInputDialog("Group ID");
-            DataManager.getInstance().getRootGroup().addSubgroups(new Group(id));
+        addUser(userIdField.getText(), groupIdField.getText());
             
-            // TODO: add new group and refresh
-            if (onRefreshListener != null)
-                onRefreshListener.run();
+        if (onRefreshListener != null)
+            onRefreshListener.run();
         });
 
         JButton userViewButton = new JButton("Open user view");
@@ -55,7 +47,6 @@ public class ManagePanel extends JPanel {
         });
 
         add(addUserButton);
-        add(addGroupButton);
         add(userViewButton);
     }
 
@@ -65,5 +56,20 @@ public class ManagePanel extends JPanel {
 
     public void setUserViewListener(Runnable userViewListener) {
         this.onUserViewListener = userViewListener;
+    }
+
+    private void addUser(String idString, String groupIdString) {
+        User user = new User(idString);
+        Group group;
+
+        if (groupIdString.isEmpty()) {
+            group = dataManager.getRootGroup();
+        } else {
+            group = dataManager.findGroupById(groupIdString);
+        }
+
+        if (group != null) {
+            group.addUser(user);
+        }
     }
 }
