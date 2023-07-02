@@ -1,6 +1,7 @@
 package com.andrewjunggg.ui;
 
 import javax.swing.JFrame;
+import javax.swing.JTextArea;
 
 import com.andrewjunggg.User;
 
@@ -22,8 +23,11 @@ public class UserView extends JFrame {
         FollowingPanel followingPanel = new FollowingPanel(user);
         followingPanel.setRefreshListener(feedPanel::update);
 
+        JTextArea creationTimeText = new JTextArea("Created on " + user.getCreationTime());
+
         add(followingPanel, BorderLayout.NORTH);
         add(feedPanel);
+        add(creationTimeText, BorderLayout.SOUTH);
 
         addWindowListener(new WindowListener() {
             @Override
