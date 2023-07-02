@@ -1,5 +1,6 @@
 package com.andrewjunggg.ui;
 
+import java.awt.BorderLayout;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +12,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import com.andrewjunggg.Feed;
 import com.andrewjunggg.Tweet;
@@ -84,7 +86,13 @@ public class FeedPanel extends JPanel {
             else
                 JOptionPane.showMessageDialog(null, "Tweet must be less than " + TweetLengthValidatorVisitor.MAX_TWEET_LENGTH + " characters long.");
         });
+
+        JTextArea creationTimeText = new JTextArea("Created on " + user.getCreationTime());
+        JTextArea lastUpdateTimeText = new JTextArea("Last updated on " + user.getFeed().getLastUpdateTime());
+
         add(addTweetButton);
+        add(creationTimeText, BorderLayout.SOUTH);
+        add(lastUpdateTimeText, BorderLayout.SOUTH);
     }
 
     public void update() {
