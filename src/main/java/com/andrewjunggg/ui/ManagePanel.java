@@ -40,14 +40,10 @@ public class ManagePanel extends JPanel {
             String userId = userIdField.getText();
             String groupId = groupIdField.getText();
 
-            if (dataManager.findUserById(userId) == null) {
-                addUser(userId, groupId);
+            addUser(userId, groupId);
 
-                if (onRefreshListener != null)
-                    onRefreshListener.run();
-            } else {
-                JOptionPane.showMessageDialog(null, "User with that ID already exists.");
-            }
+            if (onRefreshListener != null)
+                onRefreshListener.run();
         });
         add(addUserButton);
 
@@ -65,14 +61,10 @@ public class ManagePanel extends JPanel {
             String groupId = groupIdField.getText();
             String parentGroupId = parentGroupIdField.getText();
 
-            if (dataManager.findGroupById(groupId) == null) {
-                addGroup(groupId, parentGroupId);
-
-                if (onRefreshListener != null)
-                    onRefreshListener.run();
-            } else {
-                JOptionPane.showMessageDialog(null, "Group with that ID already exists.");
-            }
+            addGroup(groupId, parentGroupId);
+            
+            if (onRefreshListener != null)
+                onRefreshListener.run();
         });
         add(addGroupButton);
 
