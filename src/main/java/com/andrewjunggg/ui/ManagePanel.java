@@ -1,6 +1,8 @@
 package com.andrewjunggg.ui;
 
 import java.awt.Dimension;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -121,6 +123,45 @@ public class ManagePanel extends JPanel {
         });
 
         add(lastUpdatedUserButton);
+
+        JButton validateButton = new JButton("Validate User and Group IDs");
+
+        validateButton.addActionListener(actionEvent -> {
+            boolean spaceDetected = false;
+            User[] allUsers = dataManager.getAllUsers();
+            Group[] allGroups = dataManager.getAllGroups();
+
+            Set<String> uniqueUserIds = new HashSet<>();
+            Set<String> uniqueGroupIds = new HashSet<>();
+
+            for (User user : allUsers) {
+                uniqueUserIds.add(user.getId());
+
+                if (user.getId().contains(" "))
+                    spaceDetected = true;
+            }
+
+
+            for (Group group : allGroups) {
+                uniqueGroupIds.add(group.getId());
+
+                if (group.getId().contains(" "))
+                    spaceDetected = true;
+            }
+
+            if (allUsers.length < 1 || allGroups.length < 1)
+                JOptionPane.showMessageDialog(null, "No users or groups created.");
+            else if (uniqueUserIds.size() != allUsers.length)
+                JOptionPane.showMessageDialog(null, "Validation failed! Duplicate users detected.");
+            else if (uniqueGroupIds.size() != allGroups.length)
+                JOptionPane.showMessageDialog(null, "Validation failed! Duplicate groups detected.");
+            else if (spaceDetected)
+                JOptionPane.showMessageDialog(null, "Validation failed! Space(s) detected.");
+            else
+                JOptionPane.showMessageDialog(null, "Validation successful! No user duplicates and all users doesn't contain spaces.");
+
+        });
+        add(validateButton);
     }
 
     private void addUser(String userId, String groupId) {
