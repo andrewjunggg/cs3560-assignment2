@@ -1,7 +1,9 @@
 package com.andrewjunggg;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DataManager implements IDataManager {
@@ -115,5 +117,19 @@ public class DataManager implements IDataManager {
         }
 
         return tweets.toArray(Tweet[]::new);
+    }
+
+    @Override
+    public User getLastUpdatedUser() {
+        User[] users = getAllUsers();
+
+        if (users.length == 0)
+            return null;
+
+        Arrays.sort(users, Comparator.comparing(user ->
+            user.getFeed().getLastUpdateTime()
+        ));
+
+        return users[users.length - 1];
     }
 }

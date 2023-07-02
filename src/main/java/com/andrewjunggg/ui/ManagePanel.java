@@ -107,6 +107,20 @@ public class ManagePanel extends JPanel {
             JOptionPane.showMessageDialog(null, "Total Group(s): " + allGroups.length + "\nTotal User(s): " + allUsers.length + "\nTotal Tweet(s): " + allTweets.length);
         });
         add(statsButton);
+
+        JButton lastUpdatedUserButton = new JButton("Last updated user");
+
+        lastUpdatedUserButton.addActionListener(actionEvent -> {
+            User lastUpdatedUser = dataManager.getLastUpdatedUser();
+
+            if (lastUpdatedUser == null) {
+                JOptionPane.showMessageDialog(null, "No users updated.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Last user updated on " + lastUpdatedUser.getFeed().getLastUpdateTime() + " by " + lastUpdatedUser.getId());
+            }
+        });
+
+        add(lastUpdatedUserButton);
     }
 
     private void addUser(String userId, String groupId) {

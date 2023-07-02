@@ -1,7 +1,6 @@
 package com.andrewjunggg.ui;
 
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
 
 import com.andrewjunggg.User;
 

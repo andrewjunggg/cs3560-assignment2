@@ -12,4 +12,6 @@ public interface IDataManager {
     Group[] getAllGroups();
 
     Tweet[] getAllTweets();
+
+    User getLastUpdatedUser();
 }
